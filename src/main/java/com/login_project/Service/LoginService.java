@@ -5,33 +5,27 @@ import com.login_project.Exception.RegistrationException;
 import com.login_project.Repo.LoginRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import java.util.Optional;
 
 @Service
 public class LoginService {
 
     private final LoginRepo loginRepo;
-    private final  PasswordEncoder passwordEncoder;
-    public LoginService(LoginRepo loginRepo , PasswordEncoder passwordEncoder) {
+    private final PasswordEncoder passwordEncoder;
+
+    public LoginService(LoginRepo loginRepo, PasswordEncoder passwordEncoder) {
         this.loginRepo = loginRepo;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public boolean login(String username, String password) {
+    /**
+     * The login() method has been removed because in a Spring Security JWT setup,
+     * the AuthenticationManager uses the CustomUserDetailsService to handle authentication,
+     * making a separate login method in this service redundant.
+     */
 
-        Optional<UserEntity> obj = loginRepo.findByEmailid(username);
-        if(obj.isPresent()) {
-            UserEntity user = obj.get();
-            if(user.getPassword().equals(password)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-
-
+    /**
+     * Handles all business logic and validation for registering a new user.
+     */
     public void register(String username, String password, String confirmPassword) {
         // --- ALL VALIDATION LOGIC IS NOW HERE ---
 
@@ -56,14 +50,11 @@ public class LoginService {
         UserEntity user = new UserEntity();
         user.setEmailid(username);
         user.setPassword(passwordEncoder.encode(password)); // Hashing is done here!
-        System.out.println(user);
+
         loginRepo.save(user);
     }
 
     public boolean userExists(String emailid) {
         return loginRepo.findByEmailid(emailid).isPresent();
     }
-
-
-
 }

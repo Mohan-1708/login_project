@@ -21,14 +21,7 @@ public class Login_Register {
         this.loginService = loginService;
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
+
 
     @PostMapping("/register") // Keep the full path here
     public String register(@RequestParam String username,
@@ -40,7 +33,7 @@ public class Login_Register {
             loginService.register(username, password, confirmPassword);
             System.out.println("Register successful");
 
-            return "redirect:/api/login";
+            return "redirect:/login";
         } catch (RegistrationException e) {
 
             model.addAttribute("error", e.getMessage());
