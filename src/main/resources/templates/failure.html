@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Failed</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: grid;
+            place-items: center;
+            min-height: 90vh;
+            background-color: #f8f9fa;
+            margin: 0;
+            color: #343a40;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 40px 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid #dee2e6;
+        }
+        .icon {
+            font-size: 50px;
+            color: #dc3545; /* Red for failure */
+        }
+        h1 {
+            font-size: 28px;
+            margin: 20px 0 10px;
+        }
+        p {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+        a.button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- A simple 'X' icon for failure -->
+    <div class="icon">&#10060;</div>
+    <h1>Login Failed</h1>
+    <p>The email or password you entered is incorrect. Please check your credentials and try again.</p>
+    <!-- This link will take the user back to your login page -->
+    <a href="/api/login" class="button">Try Again</a>
+</div>
+
+</body>
+</html>
