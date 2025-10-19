@@ -1,72 +1,258 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Home</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--            justify-content: center;-->
+<!--            min-height: 90vh;-->
+<!--            background-color: #f8f9fa;-->
+<!--            margin: 0;-->
+<!--            color: #343a40;-->
+<!--        }-->
+<!--        .container {-->
+<!--            text-align: center;-->
+<!--            background: #fff;-->
+<!--            padding: 40px 50px;-->
+<!--            border-radius: 12px;-->
+<!--            box-shadow: 0 4px 20px rgba(0,0,0,0.1);-->
+<!--            border: 1px solid #dee2e6;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            font-size: 28px;-->
+<!--            margin: 20px 0 10px;-->
+<!--        }-->
+<!--        p {-->
+<!--            font-size: 1.2em;-->
+<!--            color: #6c757d;-->
+<!--        }-->
+<!--        button {-->
+<!--            margin-top: 20px;-->
+<!--            padding: 12px 30px;-->
+<!--            background-color: #dc3545;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 6px;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 16px;-->
+<!--            font-weight: 500;-->
+<!--            transition: background-color 0.2s ease;-->
+<!--        }-->
+<!--        button:hover {-->
+<!--            background-color: #c82333;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<div class="container">-->
+<!--    <h1>Welcome to the Protected Home Page!</h1>-->
+<!--    <p>You can only see this because your browser sent a valid JWT cookie.</p>-->
+<!--    <button onclick="logout()">Logout</button>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    async function logout() {-->
+<!--        // 1. Call the server's logout endpoint.-->
+<!--        // This will tell the server to send back a command to clear the HttpOnly cookie.-->
+<!--        await fetch('/api/logout', { method: 'POST' });-->
+
+<!--        // 2. After the cookie is cleared, redirect the user to the login page.-->
+<!--        window.location.href = '/login';-->
+<!--    }-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
     <style>
+        :root {
+            --sidebar-bg: #1f2937;
+            --main-bg: #f9fafb;
+            --text-light: #d1d5db;
+            --text-dark: #374151;
+            --accent-color: #3b82f6;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            background-color: var(--main-bg);
+        }
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: white;
             display: flex;
             flex-direction: column;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        .sidebar-header {
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #374151;
+            margin-bottom: 24px;
+            display: flex;
             align-items: center;
-            justify-content: center;
-            min-height: 90vh;
-            background-color: #f8f9fa;
-            margin: 0;
-            color: #343a40;
         }
-        .container {
-            text-align: center;
-            background: #fff;
-            padding: 40px 50px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            border: 1px solid #dee2e6;
+        .sidebar-header .logo {
+            width: 32px;
+            height: 32px;
+            margin-right: 12px;
+            background-color: var(--accent-color);
+            border-radius: 8px;
         }
-        h1 {
-            font-size: 28px;
-            margin: 20px 0 10px;
+        .sidebar-nav {
+            flex-grow: 1;
         }
-        p {
-            font-size: 1.2em;
-            color: #6c757d;
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            transition: background-color 0.2s;
         }
-        button {
-            margin-top: 20px;
-            padding: 12px 30px;
-            background-color: #dc3545;
+        .nav-item:hover, .nav-item.active {
+            background-color: #374151;
             color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: background-color 0.2s ease;
         }
-        button:hover {
-            background-color: #c82333;
+        .nav-item .icon {
+            margin-right: 16px;
+            width: 20px;
+            height: 20px;
+        }
+        .sidebar-footer {
+            padding-top: 24px;
+            border-top: 1px solid #374151;
+        }
+        .logout-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin: 0;
+        }
+        .user-info {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Welcome to the Protected Home Page!</h1>
-    <p>You can only see this because your browser sent a valid JWT cookie.</p>
-    <button onclick="logout()">Logout</button>
-</div>
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <div class="logo"></div>
+        <span>My App</span>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#" class="nav-item active">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <button onclick="logout()" class="logout-button nav-item">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+            <span>Logout</span>
+        </button>
+    </div>
+</aside>
+
+<main class="main-content">
+    <header class="header">
+        <h1>Dashboard</h1>
+        <div class="user-info">
+            Logged in as: <span id="username-placeholder">loading...</span>
+        </div>
+    </header>
+    <div class="card">
+        <h2>Welcome Back!</h2>
+        <p>This is your protected dashboard. You can only see this page because you are authenticated.</p>
+    </div>
+</main>
 
 <script>
-    async function logout() {
-        // 1. Call the server's logout endpoint.
-        // This will tell the server to send back a command to clear the HttpOnly cookie.
-        await fetch('/api/logout', { method: 'POST' });
+    window.onload = async function() {
+        const usernamePlaceholder = document.getElementById('username-placeholder');
 
-        // 2. After the cookie is cleared, redirect the user to the login page.
+        // The browser automatically sends the JWT cookie with this request.
+        try {
+            const response = await fetch('/api/user-details', {
+                method: 'GET'
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                usernamePlaceholder.textContent = data.username; // Display the user's email
+            } else {
+                // This will trigger if the token is expired or invalid, logging the user out.
+                logout();
+            }
+        } catch (error) {
+            console.error('Failed to fetch user details:', error);
+            usernamePlaceholder.textContent = 'Error';
+            logout(); // Redirect on any other error as well
+        }
+    };
+
+    async function logout() {
+        // Clear the HttpOnly cookie by calling the server's logout endpoint
+        await fetch('/api/logout', { method: 'POST' });
+        // Redirect to the login page
         window.location.href = '/login';
     }
 </script>
 
 </body>
 </html>
+
+
 

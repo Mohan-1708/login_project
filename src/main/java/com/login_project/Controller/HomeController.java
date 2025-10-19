@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -21,5 +22,15 @@ public class HomeController {
     public ResponseEntity<String> welcomeMessage(Principal principal) {
         // 'principal.getName()' will return the username (email) from the JWT
         return ResponseEntity.ok("Welcome, " + principal.getName() + "!");
+    }
+
+    @GetMapping("/user-details")
+    public ResponseEntity<?> getUserDetails(Principal principal) {
+        if (principal == null) {
+            // This case should ideally not be hit if security is configured correctly
+            return ResponseEntity.status(401).body(Map.of("error", "User not authenticated"));
+        }
+        // Return the user's name in a structured format
+        return ResponseEntity.ok(Map.of("username", principal.getName()));
     }
 }

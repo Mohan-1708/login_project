@@ -1,3 +1,119 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Login</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;-->
+<!--            display: grid;-->
+<!--            place-items: center;-->
+<!--            min-height: 90vh;-->
+<!--            background-color: #f8f9fa;-->
+<!--            margin: 0;-->
+<!--        }-->
+<!--        form {-->
+<!--            background: #fff;-->
+<!--            border: 1px solid #dee2e6;-->
+<!--            padding: 30px 40px;-->
+<!--            border-radius: 12px;-->
+<!--            box-shadow: 0 4px 20px rgba(0,0,0,0.1);-->
+<!--            width: 320px;-->
+<!--        }-->
+<!--        h2 { text-align: center; margin-bottom: 25px; color: #343a40; }-->
+<!--        .form-group { margin-bottom: 20px; }-->
+<!--        label { display: block; margin-bottom: 8px; font-weight: 500; color: #495057; }-->
+<!--        input[type="email"], input[type="password"] {-->
+<!--            width: 100%;-->
+<!--            padding: 10px;-->
+<!--            box-sizing: border-box;-->
+<!--            border: 1px solid #ced4da;-->
+<!--            border-radius: 6px;-->
+<!--            font-size: 16px;-->
+<!--        }-->
+<!--        button {-->
+<!--            width: 100%;-->
+<!--            padding: 12px;-->
+<!--            background-color: #007bff;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            border-radius: 6px;-->
+<!--            cursor: pointer;-->
+<!--            font-size: 16px;-->
+<!--            font-weight: 600;-->
+<!--            transition: background-color 0.2s;-->
+<!--        }-->
+<!--        button:hover { background-color: #0056b3; }-->
+<!--        #response-message {-->
+<!--            margin-top: 15px;-->
+<!--            text-align: center;-->
+<!--            font-weight: 500;-->
+<!--        }-->
+<!--        .error { color: #dc3545; }-->
+<!--        .success { color: #28a745; }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<form id="login-form" action="/api/login" method="post">-->
+<!--    <h2 style="text-align: center;">Login</h2>-->
+<!--    <div class="form-group">-->
+<!--        <label for="email">Email:</label>-->
+<!--        <input type="email" id="email" name="username" placeholder="your@email.com" required autofocus>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--        <label for="password">Password:</label>-->
+<!--        <input type="password" id="password" name="password" required>-->
+<!--    </div>-->
+<!--    <button type="submit">Log In</button>-->
+<!--    <div id="response-message"></div>-->
+<!--</form>-->
+
+<!--<script>-->
+<!--    document.getElementById('login-form').addEventListener('submit', async function(event) {-->
+<!--        // 1. Prevent the default form submission-->
+<!--        event.preventDefault();-->
+
+<!--        const form = event.target;-->
+<!--        const data = Object.fromEntries(new FormData(form).entries());-->
+<!--        const responseMessageDiv = document.getElementById('response-message');-->
+<!--        responseMessageDiv.textContent = '';-->
+<!--        responseMessageDiv.className = '';-->
+
+<!--        try {-->
+<!--            // 2. Send the credentials to the server as JSON-->
+<!--            const response = await fetch(form.action, {-->
+<!--                method: 'POST',-->
+<!--                headers: { 'Content-Type': 'application/json' },-->
+<!--                body: JSON.stringify(data)-->
+<!--            });-->
+
+<!--            // 3. Handle the response-->
+<!--            if (response.ok) {-->
+<!--                // If the server responds with 200 OK, the cookie was set successfully.-->
+<!--                responseMessageDiv.textContent = 'Login successful! Redirecting...';-->
+<!--                responseMessageDiv.className = 'success';-->
+
+<!--                // Redirect to the protected home page. The browser will now automatically send the cookie.-->
+<!--                setTimeout(() => { window.location.href = '/home'; }, 1000);-->
+
+<!--            } else {-->
+<!--                // If login fails, the server sends back a JSON error message-->
+<!--                const result = await response.json();-->
+<!--                responseMessageDiv.textContent = result.error || 'Login failed.';-->
+<!--                responseMessageDiv.className = 'error';-->
+<!--            }-->
+<!--        } catch (error) {-->
+<!--            console.error('Login error:', error);-->
+<!--            responseMessageDiv.textContent = 'An error occurred. Please try again.';-->
+<!--            responseMessageDiv.className = 'error';-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -51,6 +167,22 @@
         }
         .error { color: #dc3545; }
         .success { color: #28a745; }
+        /* --- Style for the new register link --- */
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            font-size: 14px;
+        }
+        .register-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -67,6 +199,11 @@
     </div>
     <button type="submit">Log In</button>
     <div id="response-message"></div>
+
+    <!-- New Register Link -->
+    <div class="register-link">
+        <p>Don't have an account? <a href="/register">Register now</a></p>
+    </div>
 </form>
 
 <script>
