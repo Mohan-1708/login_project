@@ -1,3 +1,94 @@
+<!--&lt;!&ndash;<!DOCTYPE html>&ndash;&gt;-->
+<!--&lt;!&ndash;<html xmlns:th="http://www.thymeleaf.org">&ndash;&gt;-->
+<!--&lt;!&ndash;<head>&ndash;&gt;-->
+<!--&lt;!&ndash;    <meta charset="UTF-8">&ndash;&gt;-->
+<!--&lt;!&ndash;    <title>Register</title>&ndash;&gt;-->
+<!--&lt;!&ndash;    <style>&ndash;&gt;-->
+<!--&lt;!&ndash;        body {&ndash;&gt;-->
+<!--&lt;!&ndash;            font-family: Arial, sans-serif;&ndash;&gt;-->
+<!--&lt;!&ndash;            display: grid;&ndash;&gt;-->
+<!--&lt;!&ndash;            place-items: center;&ndash;&gt;-->
+<!--&lt;!&ndash;            min-height: 90vh;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #f4f4f4;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        form {&ndash;&gt;-->
+<!--&lt;!&ndash;            background: #fff;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #ccc;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 25px;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-shadow: 0 2px 5px rgba(0,0,0,0.1);&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        div {&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 15px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        label {&ndash;&gt;-->
+<!--&lt;!&ndash;            display: block;&ndash;&gt;-->
+<!--&lt;!&ndash;            margin-bottom: 5px;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-weight: bold;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        input[type="email"],&ndash;&gt;-->
+<!--&lt;!&ndash;        input[type="password"] {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 300px;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 8px;&ndash;&gt;-->
+<!--&lt;!&ndash;            box-sizing: border-box; /* Ensures padding doesn't affect width */&ndash;&gt;-->
+<!--&lt;!&ndash;            border: 1px solid #ddd;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 4px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        button {&ndash;&gt;-->
+<!--&lt;!&ndash;            width: 100%;&ndash;&gt;-->
+<!--&lt;!&ndash;            padding: 10px;&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #28a745; /* Green color for register */&ndash;&gt;-->
+<!--&lt;!&ndash;            color: white;&ndash;&gt;-->
+<!--&lt;!&ndash;            border: none;&ndash;&gt;-->
+<!--&lt;!&ndash;            border-radius: 4px;&ndash;&gt;-->
+<!--&lt;!&ndash;            cursor: pointer;&ndash;&gt;-->
+<!--&lt;!&ndash;            font-size: 16px;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;        button:hover {&ndash;&gt;-->
+<!--&lt;!&ndash;            background-color: #218838;&ndash;&gt;-->
+<!--&lt;!&ndash;        }&ndash;&gt;-->
+<!--&lt;!&ndash;    </style>&ndash;&gt;-->
+<!--&lt;!&ndash;</head>&ndash;&gt;-->
+<!--&lt;!&ndash;<body>&ndash;&gt;-->
+
+<!--&lt;!&ndash;<form th:action="@{/api/register}" method="post">&ndash;&gt;-->
+<!--&lt;!&ndash;    <h2 style="text-align: center;">Create Account</h2>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <label for="email">Email:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="email"&ndash;&gt;-->
+<!--&lt;!&ndash;               id="email"&ndash;&gt;-->
+<!--&lt;!&ndash;               name="username"&ndash;&gt;-->
+<!--&lt;!&ndash;               placeholder="your@email.com"&ndash;&gt;-->
+<!--&lt;!&ndash;               required&ndash;&gt;-->
+<!--&lt;!&ndash;               autofocus>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <label for="password">Password:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="password"&ndash;&gt;-->
+<!--&lt;!&ndash;               id="password"&ndash;&gt;-->
+<!--&lt;!&ndash;               name="password"&ndash;&gt;-->
+<!--&lt;!&ndash;               required>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <label for="confirmPassword">Confirm Password:</label>&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="password"&ndash;&gt;-->
+<!--&lt;!&ndash;               id="confirmPassword"&ndash;&gt;-->
+<!--&lt;!&ndash;               name="confirmPassword"&ndash;&gt;-->
+<!--&lt;!&ndash;               required>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <button type="submit">Register</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;</body>&ndash;&gt;-->
+<!--&lt;!&ndash;</html>&ndash;&gt;-->
+
 <!--<!DOCTYPE html>-->
 <!--<html xmlns:th="http://www.thymeleaf.org">-->
 <!--<head>-->
@@ -47,6 +138,16 @@
 <!--        button:hover {-->
 <!--            background-color: #218838;-->
 <!--        }-->
+<!--        /* Style for the error message */-->
+<!--        .error-message {-->
+<!--            color: #D8000C; /* Red */-->
+<!--            background-color: #FFD2D2;-->
+<!--            border: 1px solid #D8000C;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 4px;-->
+<!--            text-align: center;-->
+<!--            font-weight: bold;-->
+<!--        }-->
 <!--    </style>-->
 <!--</head>-->
 <!--<body>-->
@@ -54,6 +155,9 @@
 <!--<form th:action="@{/api/register}" method="post">-->
 <!--    <h2 style="text-align: center;">Create Account</h2>-->
 
+<!--    <div th:if="${error}" class="error-message">-->
+<!--        <p th:text="${error}"></p>-->
+<!--    </div>-->
 <!--    <div>-->
 <!--        <label for="email">Email:</label>-->
 <!--        <input type="email"-->
@@ -85,7 +189,6 @@
 <!--    </div>-->
 <!--</form>-->
 
-
 <!--</body>-->
 <!--</html>-->
 
@@ -93,101 +196,69 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Event Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            display: grid;
-            place-items: center;
-            min-height: 90vh;
-            background-color: #f4f4f4;
-        }
-        form {
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        div {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="email"],
-        input[type="password"] {
-            width: 300px;
-            padding: 8px;
-            box-sizing: border-box; /* Ensures padding doesn't affect width */
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745; /* Green color for register */
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        /* Style for the error message */
-        .error-message {
-            color: #D8000C; /* Red */
-            background-color: #FFD2D2;
-            border: 1px solid #D8000C;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
-            font-weight: bold;
+            font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 flex flex-col items-center justify-center min-h-screen py-12">
 
-<form th:action="@{/api/register}" method="post">
-    <h2 style="text-align: center;">Create Account</h2>
+<div class="text-center mb-8">
+    <h1 class="text-4xl font-bold text-gray-800">Event Management App</h1>
+    <p class="text-gray-500 mt-2">Create your account</p>
+</div>
 
-    <div th:if="${error}" class="error-message">
-        <p th:text="${error}"></p>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email"
-               id="email"
-               name="username"
-               placeholder="your@email.com"
-               required
-               autofocus>
-    </div>
+<div class="w-full max-w-md">
+    <form th:action="@{/api/register}" method="post" class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
 
-    <div>
-        <label for="password">Password:</label>
-        <input type="password"
-               id="password"
-               name="password"
-               required>
-    </div>
+        <div th:if="${error}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
+            <span class="block sm:inline" th:text="${error}"></span>
+        </div>
+        <div th:if="${successMessage}" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg relative mb-4" role="alert">
+            <span class="block sm:inline" th:text="${successMessage}"></span>
+        </div>
 
-    <div>
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password"
-               id="confirmPassword"
-               name="confirmPassword"
-               required>
-    </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                Email Address
+            </label>
+            <input class="shadow-sm appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" id="email" name="username" type="email" placeholder="you@example.com" required autofocus>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                Password
+            </label>
+            <input class="shadow-sm appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" id="password" name="password" type="password" placeholder="••••••••••" required>
+        </div>
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmPassword">
+                Confirm Password
+            </label>
+            <input class="shadow-sm appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" id="confirmPassword" name="confirmPassword" type="password" placeholder="••••••••••" required>
+        </div>
+        <div class="flex items-center justify-between">
+            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline w-full" type="submit">
+                Create Account
+            </button>
+        </div>
+        <div class="text-center mt-6">
+            <p class="text-sm text-gray-600">
+                Already have an account?
+                <a href="/login" class="font-bold text-blue-500 hover:text-blue-800">
+                    Sign In
+                </a>
+            </p>
+        </div>
+    </form>
+</div>
 
-    <div>
-        <button type="submit">Register</button>
-    </div>
-</form>
-
+<footer class="text-center text-gray-500 text-sm mt-8">
+    <p>Made with ❤️ by Mohan</p>
+</footer>
 </body>
 </html>

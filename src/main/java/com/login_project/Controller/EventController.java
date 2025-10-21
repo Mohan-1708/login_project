@@ -7,6 +7,9 @@ import com.login_project.Repo.EventApplicationRepository;
 import com.login_project.Repo.EventRepository;
 import com.login_project.Repo.LoginRepo; // Assuming LoginRepo is your user repository
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -65,5 +68,21 @@ public class EventController {
         applicationRepository.save(application);
 
         return ResponseEntity.ok("Application submitted successfully!");
+    }
+
+    @GetMapping("/{id}/image")
+    public ResponseEntity<byte[]> getEventImage(@PathVariable Long id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Event not found"));
+
+        if (event.getImageData() == null || event.getImageType() == null) {
+            return ResponseEntity.notFound().build(); // No image data found
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        // Set the correct Content-Type based on the stored image type
+        headers.setContentType(MediaType.parseMediaType(event.getImageType()));
+
+        return new ResponseEntity<>(event.getImageData(), headers, HttpStatus.OK);
     }
 }

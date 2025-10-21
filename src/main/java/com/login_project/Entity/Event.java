@@ -16,8 +16,16 @@ public class Event {
     @Column(nullable = false, length = 2000)
     private String description;
 
-    @Column(length = 1024) // A generous length for a URL
-    private String imageUrl;
+    // --- CHANGE THIS ---
+    @Lob // Specifies that this should be stored as a Large Object (BLOB for byte[])
+    @Column(columnDefinition="LONGBLOB") // Explicitly define column type for large images (optional but good practice for some DBs)
+    private byte[] imageData;
+    // ------------------
+
+    // --- ADD MIME TYPE ---
+    // Store the image type (e.g., "image/jpeg", "image/png") to serve it correctly
+    private String imageType;
+    // ---------------------
 
     private LocalDateTime postedAt;
 
@@ -33,8 +41,11 @@ public class Event {
     public void setTitle(String title) { this.title = title; }
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
-    public String getImageUrl() { return imageUrl; }
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public byte[] getImageData() { return imageData; }
+    public void setImageData(byte[] imageData) { this.imageData = imageData; }
+    public String getImageType() { return imageType; }
+    public void setImageType(String imageType) { this.imageType = imageType; }
+
     public LocalDateTime getPostedAt() { return postedAt; }
     public void setPostedAt(LocalDateTime postedAt) { this.postedAt = postedAt; }
 }
