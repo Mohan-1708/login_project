@@ -2,67 +2,222 @@
 <!--<html lang="en">-->
 <!--<head>-->
 <!--    <meta charset="UTF-8">-->
-<!--    <title>Home</title>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Dashboard</title>-->
 <!--    <style>-->
-<!--        body {-->
-<!--            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;-->
-<!--            display: flex;-->
-<!--            flex-direction: column;-->
-<!--            align-items: center;-->
-<!--            justify-content: center;-->
-<!--            min-height: 90vh;-->
-<!--            background-color: #f8f9fa;-->
-<!--            margin: 0;-->
-<!--            color: #343a40;-->
-<!--        }-->
-<!--        .container {-->
-<!--            text-align: center;-->
-<!--            background: #fff;-->
-<!--            padding: 40px 50px;-->
-<!--            border-radius: 12px;-->
-<!--            box-shadow: 0 4px 20px rgba(0,0,0,0.1);-->
-<!--            border: 1px solid #dee2e6;-->
-<!--        }-->
-<!--        h1 {-->
-<!--            font-size: 28px;-->
-<!--            margin: 20px 0 10px;-->
-<!--        }-->
-<!--        p {-->
-<!--            font-size: 1.2em;-->
-<!--            color: #6c757d;-->
-<!--        }-->
-<!--        button {-->
-<!--            margin-top: 20px;-->
-<!--            padding: 12px 30px;-->
-<!--            background-color: #dc3545;-->
-<!--            color: white;-->
-<!--            border: none;-->
-<!--            border-radius: 6px;-->
-<!--            cursor: pointer;-->
-<!--            font-size: 16px;-->
-<!--            font-weight: 500;-->
-<!--            transition: background-color 0.2s ease;-->
-<!--        }-->
-<!--        button:hover {-->
-<!--            background-color: #c82333;-->
-<!--        }-->
+<!--        :root { &#45;&#45;sidebar-bg: #1f2937; &#45;&#45;main-bg: #f9fafb; &#45;&#45;text-light: #d1d5db; &#45;&#45;text-dark: #374151; &#45;&#45;accent-color: #3b82f6; &#45;&#45;card-bg: #ffffff; &#45;&#45;border-color: #e5e7eb; &#45;&#45;success-color: #28a745; }-->
+<!--        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; display: flex; height: 100vh; overflow: hidden; background-color: var(&#45;&#45;main-bg); }-->
+<!--        .sidebar { width: 260px; background-color: var(&#45;&#45;sidebar-bg); color: white; display: flex; flex-direction: column; padding: 24px; box-sizing: border-box; }-->
+<!--        .sidebar-header { font-size: 1.5rem; font-weight: 600; padding-bottom: 24px; border-bottom: 1px solid #374151; margin-bottom: 24px; display: flex; align-items: center; }-->
+<!--        .sidebar-header .logo { width: 32px; height: 32px; margin-right: 12px; background-color: var(&#45;&#45;accent-color); border-radius: 8px; }-->
+<!--        .sidebar-nav { flex-grow: 1; }-->
+<!--        .nav-item { display: flex; align-items: center; padding: 12px 16px; border-radius: 8px; text-decoration: none; color: var(&#45;&#45;text-light); margin-bottom: 8px; transition: background-color 0.2s; }-->
+<!--        .nav-item:hover, .nav-item.active { background-color: #374151; color: white; }-->
+<!--        .nav-item .icon { margin-right: 16px; width: 20px; height: 20px; }-->
+<!--        .sidebar-footer { padding-top: 24px; border-top: 1px solid #374151; }-->
+<!--        .logout-button { background: none; border: none; cursor: pointer; width: 100%; text-align: left; }-->
+<!--        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }-->
+<!--        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }-->
+<!--        .header h1 { font-size: 2rem; color: var(&#45;&#45;text-dark); margin: 0; }-->
+<!--        .user-info { font-weight: 500; color: var(&#45;&#45;text-dark); }-->
+<!--        .card { background: var(&#45;&#45;card-bg); border-radius: 12px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); margin-bottom: 24px; }-->
+<!--        input, textarea, button { font-family: inherit; font-size: 1rem; }-->
+<!--        .form-group { margin-bottom: 16px; }-->
+<!--        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }-->
+<!--        .form-group input, .form-group textarea { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid var(&#45;&#45;border-color); border-radius: 6px; }-->
+<!--        .btn { padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: 600; transition: background-color 0.2s, color 0.2s; }-->
+<!--        .btn-primary { background-color: var(&#45;&#45;accent-color); color: white; }-->
+<!--        .event-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }-->
+<!--        .event-card { background: var(&#45;&#45;card-bg); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-direction: column; }-->
+<!--        .event-card img { width: 100%; height: 180px; object-fit: cover; background-color: #eee; }-->
+<!--        .event-card-content { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; }-->
+<!--        .event-card-content h3 { margin-top: 0; }-->
+<!--        .event-card-content p { flex-grow: 1; margin-bottom: 16px; }-->
 <!--    </style>-->
 <!--</head>-->
 <!--<body>-->
 
-<!--<div class="container">-->
-<!--    <h1>Welcome to the Protected Home Page!</h1>-->
-<!--    <p>You can only see this because your browser sent a valid JWT cookie.</p>-->
-<!--    <button onclick="logout()">Logout</button>-->
-<!--</div>-->
+<!--<aside class="sidebar">-->
+<!--    <div class="sidebar-header">-->
+<!--        <div class="logo"></div>-->
+<!--        <span>EventApp</span>-->
+<!--    </div>-->
+<!--    <nav class="sidebar-nav">-->
+<!--        <a href="/home" class="nav-item active">-->
+<!--            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>-->
+<!--            <span>Dashboard</span>-->
+<!--        </a>-->
+<!--    </nav>-->
+<!--    <div class="sidebar-footer">-->
+<!--        <button onclick="logout()" class="logout-button nav-item">-->
+<!--            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>-->
+<!--            <span>Logout</span>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</aside>-->
+
+<!--<main class="main-content">-->
+<!--    <header class="header">-->
+<!--        <h1 id="dashboard-title">Dashboard</h1>-->
+<!--        <div class="user-info">Logged in as: <span id="username-placeholder">loading...</span></div>-->
+<!--    </header>-->
+
+<!--    &lt;!&ndash; This content will be dynamically generated based on the user's role &ndash;&gt;-->
+<!--    <div id="dashboard-content"></div>-->
+<!--</main>-->
 
 <!--<script>-->
-<!--    async function logout() {-->
-<!--        // 1. Call the server's logout endpoint.-->
-<!--        // This will tell the server to send back a command to clear the HttpOnly cookie.-->
-<!--        await fetch('/api/logout', { method: 'POST' });-->
+<!--    // -&#45;&#45; HTML TEMPLATES for the Admin and User views -&#45;&#45;-->
+<!--    const adminViewTemplate = `-->
+<!--        <div class="card">-->
+<!--            <h2>Create New Event</h2>-->
+<!--            <form id="create-event-form">-->
+<!--                <div class="form-group">-->
+<!--                    <label for="title">Event Title</label>-->
+<!--                    <input type="text" id="title" name="title" required>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="description">Description</label>-->
+<!--                    <textarea id="description" name="description" rows="4" required></textarea>-->
+<!--                </div>-->
+<!--                <div class="form-group">-->
+<!--                    <label for="imageUrl">Image URL</label>-->
+<!--                    <input type="url" id="imageUrl" name="imageUrl" placeholder="https://placehold.co/600x400">-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn btn-primary">Create Event</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <h2>Existing Events (Admin View)</h2>-->
+<!--        <div id="event-list" class="event-list"></div>-->
+<!--    `;-->
 
-<!--        // 2. After the cookie is cleared, redirect the user to the login page.-->
+<!--    const userViewTemplate = `-->
+<!--        <h2>Available Events</h2>-->
+<!--        <div id="event-list" class="event-list"></div>-->
+<!--    `;-->
+
+<!--    // -&#45;&#45; MAIN SCRIPT -&#45;&#45;-->
+<!--    window.onload = async function() {-->
+<!--        const usernamePlaceholder = document.getElementById('username-placeholder');-->
+<!--        const dashboardContent = document.getElementById('dashboard-content');-->
+<!--        const dashboardTitle = document.getElementById('dashboard-title');-->
+
+<!--        try {-->
+<!--            // Fetch user details to get username and role. The browser sends the cookie automatically.-->
+<!--            const response = await fetch('/api/user-details');-->
+<!--            if (!response.ok) throw new Error('Not authenticated');-->
+
+<!--            const user = await response.json();-->
+<!--            usernamePlaceholder.textContent = user.username;-->
+
+<!--            // Assuming a user has one primary role-->
+<!--            const userRole = user.roles[0];-->
+
+<!--            // Render the correct view based on the user's role-->
+<!--            if (userRole === 'ROLE_ADMIN') {-->
+<!--                dashboardTitle.textContent = 'Admin Dashboard';-->
+<!--                dashboardContent.innerHTML = adminViewTemplate;-->
+<!--                document.getElementById('create-event-form').addEventListener('submit', createEvent);-->
+<!--                loadEventsForAdmin();-->
+<!--            } else { // 'ROLE_USER'-->
+<!--                dashboardTitle.textContent = 'User Dashboard';-->
+<!--                dashboardContent.innerHTML = userViewTemplate;-->
+<!--                loadEventsForUser();-->
+<!--            }-->
+<!--        } catch (error) {-->
+<!--            // If user details can't be fetched, the token is invalid or expired. Logout.-->
+<!--            logout();-->
+<!--        }-->
+<!--    };-->
+
+<!--    // -&#45;&#45; API & RENDER FUNCTIONS -&#45;&#45;-->
+<!--    async function fetchEvents() {-->
+<!--        const response = await fetch('/api/events');-->
+<!--        return await response.json();-->
+<!--    }-->
+
+<!--    async function loadEventsForAdmin() {-->
+<!--        const events = await fetchEvents();-->
+<!--        const eventList = document.getElementById('event-list');-->
+<!--        eventList.innerHTML = events.map(event => `-->
+<!--            <div class="event-card">-->
+<!--                <img src="${event.imageUrl || 'https://placehold.co/600x400/EEE/31343C?text=No+Image'}" alt="${event.title}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EEE/31343C?text=Invalid+Image';">-->
+<!--                <div class="event-card-content">-->
+<!--                    <h3>${event.title}</h3>-->
+<!--                    <button class="btn" onclick="viewApplicants(${event.id})">View Applicants</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        `).join('');-->
+<!--    }-->
+
+<!--    async function loadEventsForUser() {-->
+<!--        const events = await fetchEvents();-->
+<!--        const eventList = document.getElementById('event-list');-->
+<!--        eventList.innerHTML = events.map(event => `-->
+<!--            <div class="event-card">-->
+<!--                <img src="${event.imageUrl || 'https://placehold.co/600x400/EEE/31343C?text=No+Image'}" alt="${event.title}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EEE/31343C?text=Invalid+Image';">-->
+<!--                <div class="event-card-content">-->
+<!--                    <h3>${event.title}</h3>-->
+<!--                    <p>${event.description.substring(0, 100)}...</p>-->
+<!--                    <button class="btn btn-primary" onclick="applyForEvent(${event.id}, this)">Apply</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        `).join('');-->
+<!--    }-->
+
+<!--    async function createEvent(event) {-->
+<!--        event.preventDefault();-->
+<!--        const form = event.target;-->
+<!--        const data = Object.fromEntries(new FormData(form).entries());-->
+
+<!--        const response = await fetch('/api/admin/events', {-->
+<!--            method: 'POST',-->
+<!--            headers: { 'Content-Type': 'application/json' },-->
+<!--            body: JSON.stringify(data)-->
+<!--        });-->
+
+<!--        if (response.ok) {-->
+<!--            form.reset();-->
+<!--            loadEventsForAdmin();-->
+<!--            alert('Event created successfully!');-->
+<!--        } else {-->
+<!--            alert('Failed to create event. You must be an admin.');-->
+<!--        }-->
+<!--    }-->
+
+<!--    async function applyForEvent(eventId, button) {-->
+<!--        button.disabled = true;-->
+<!--        button.textContent = 'Applying...';-->
+
+<!--        const response = await fetch(`/api/events/${eventId}/apply`, { method: 'POST' });-->
+
+<!--        if (response.ok) {-->
+<!--            button.textContent = 'Applied!';-->
+<!--            button.style.backgroundColor = 'var(&#45;&#45;success-color)';-->
+<!--        } else {-->
+<!--            const message = await response.text();-->
+<!--            alert(`Application failed: ${message}`);-->
+<!--            button.textContent = 'Apply';-->
+<!--            button.disabled = false;-->
+<!--        }-->
+<!--    }-->
+
+<!--    async function viewApplicants(eventId) {-->
+<!--        const response = await fetch(`/api/admin/events/${eventId}/applications`);-->
+<!--        if(response.ok) {-->
+<!--            const applicants = await response.json();-->
+<!--            if(applicants.length > 0) {-->
+<!--                alert(`Applicants for this event:\n\n- ${applicants.join('\n- ')}`);-->
+<!--            } else {-->
+<!--                alert('No one has applied for this event yet.');-->
+<!--            }-->
+<!--        } else {-->
+<!--            alert('Failed to fetch applicants. You must be an admin.');-->
+<!--        }-->
+<!--    }-->
+
+<!--    async function logout() {-->
+<!--        await fetch('/api/logout', { method: 'POST' });-->
 <!--        window.location.href = '/login';-->
 <!--    }-->
 <!--</script>-->
@@ -83,6 +238,10 @@
             --text-light: #d1d5db;
             --text-dark: #374151;
             --accent-color: #3b82f6;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -150,8 +309,8 @@
             cursor: pointer;
             width: 100%;
             text-align: left;
+            padding: 0;
         }
-
         /* --- Main Content --- */
         .main-content {
             flex-grow: 1;
@@ -174,10 +333,116 @@
             color: var(--text-dark);
         }
         .card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 12px;
             padding: 24px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 24px;
+        }
+        input, textarea, button {
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        .event-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+        .event-card-content {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .event-card-content h3 {
+            margin-top: 0;
+        }
+        .event-card-content p {
+            flex-grow: 1;
+            margin-bottom: 16px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .event-card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -186,16 +451,12 @@
 <aside class="sidebar">
     <div class="sidebar-header">
         <div class="logo"></div>
-        <span>My App</span>
+        <span>EventApp</span>
     </div>
     <nav class="sidebar-nav">
-        <a href="#" class="nav-item active">
+        <a href="/home" class="nav-item active">
             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
             <span>Dashboard</span>
-        </a>
-        <a href="#" class="nav-item">
-            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-            <span>Profile</span>
         </a>
     </nav>
     <div class="sidebar-footer">
@@ -208,51 +469,224 @@
 
 <main class="main-content">
     <header class="header">
-        <h1>Dashboard</h1>
-        <div class="user-info">
-            Logged in as: <span id="username-placeholder">loading...</span>
-        </div>
+        <h1 id="dashboard-title">Dashboard</h1>
+        <div class="user-info">Logged in as: <span id="username-placeholder">loading...</span></div>
     </header>
-    <div class="card">
-        <h2>Welcome Back!</h2>
-        <p>This is your protected dashboard. You can only see this page because you are authenticated.</p>
-    </div>
+    <div id="dashboard-content"></div>
 </main>
 
+<!-- Edit Event Modal -->
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('edit-modal')">&times;</span>
+        <h2>Edit Event</h2>
+        <form id="edit-event-form">
+            <input type="hidden" id="edit-event-id">
+            <div class="form-group"><label for="edit-title">Event Title</label><input type="text" id="edit-title" required></div>
+            <div class="form-group"><label for="edit-description">Description</label><textarea id="edit-description" rows="4" required></textarea></div>
+            <div class="form-group"><label for="edit-imageUrl">Image URL</label><input type="url" id="edit-imageUrl"></div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+<!-- Applicants Modal -->
+<div id="applicants-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('applicants-modal')">&times;</span>
+        <h2 id="applicants-modal-title">Applicants</h2>
+        <div id="applicant-list"></div>
+    </div>
+</div>
+
 <script>
+    let currentEvents = [];
+
+    // --- HTML TEMPLATES ---
+    const adminViewTemplate = `
+        <div class="card">
+            <h2>Create New Event</h2>
+            <form id="create-event-form">
+                <div class="form-group">
+                    <label for="title">Event Title</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl">Image URL</label>
+                    <input type="url" id="imageUrl" name="imageUrl" placeholder="https://placehold.co/600x400">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Event</button>
+            </form>
+        </div>
+        <h2>Existing Events (Admin View)</h2>
+        <div id="event-list" class="event-list"></div>
+    `;
+
+    const userViewTemplate = `
+        <h2>Available Events</h2>
+        <div id="event-list" class="event-list"></div>
+    `;
+
+    // --- UTILITY FUNCTIONS ---
+    function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+    async function logout() {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.href = '/login';
+    }
+
+    // --- MAIN SCRIPT ---
     window.onload = async function() {
-        const usernamePlaceholder = document.getElementById('username-placeholder');
-
-        // The browser automatically sends the JWT cookie with this request.
         try {
-            const response = await fetch('/api/user-details', {
-                method: 'GET'
-            });
+            const response = await fetch('/api/user-details');
+            if (!response.ok) throw new Error('Not authenticated');
 
-            if (response.ok) {
-                const data = await response.json();
-                usernamePlaceholder.textContent = data.username; // Display the user's email
+            const user = await response.json();
+            document.getElementById('username-placeholder').textContent = user.username;
+            const userRole = user.roles[0];
+
+            if (userRole === 'ROLE_ADMIN') {
+                document.getElementById('dashboard-title').textContent = 'Admin Dashboard';
+                document.getElementById('dashboard-content').innerHTML = adminViewTemplate;
+                document.getElementById('create-event-form').addEventListener('submit', createEvent);
+                document.getElementById('edit-event-form').addEventListener('submit', handleEditSubmit);
+                await loadEventsForAdmin();
             } else {
-                // This will trigger if the token is expired or invalid, logging the user out.
-                logout();
+                document.getElementById('dashboard-title').textContent = 'User Dashboard';
+                document.getElementById('dashboard-content').innerHTML = userViewTemplate;
+                await loadEventsForUser();
             }
         } catch (error) {
-            console.error('Failed to fetch user details:', error);
-            usernamePlaceholder.textContent = 'Error';
-            logout(); // Redirect on any other error as well
+            logout();
         }
     };
 
-    async function logout() {
-        // Clear the HttpOnly cookie by calling the server's logout endpoint
-        await fetch('/api/logout', { method: 'POST' });
-        // Redirect to the login page
-        window.location.href = '/login';
+    // --- API & RENDER FUNCTIONS ---
+    async function fetchEvents() {
+        const response = await fetch('/api/events');
+        currentEvents = await response.json();
+        return currentEvents;
+    }
+
+    async function loadEventsForAdmin() {
+        const events = await fetchEvents();
+        const eventList = document.getElementById('event-list');
+        eventList.innerHTML = events.map(event => `
+            <div class="event-card">
+                <img src="${event.imageUrl || 'https://placehold.co/600x400/EEE/31343C?text=No+Image'}" alt="${event.title}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EEE/31343C?text=Invalid+Image';">
+                <div class="event-card-content">
+                    <h3>${event.title}</h3>
+                    <div class="event-card-actions">
+                        <button class="btn" onclick="openApplicantsModal(${event.id}, '${event.title}')">Applicants</button>
+                        <button class="btn" onclick="openEditModal(${event.id})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteEvent(${event.id})">Delete</button>
+                    </div>
+                </div>
+            </div>`).join('');
+    }
+
+    async function loadEventsForUser() {
+        const events = await fetchEvents();
+        const eventList = document.getElementById('event-list');
+        eventList.innerHTML = events.map(event => `
+            <div class="event-card">
+                <img src="${event.imageUrl || 'https://placehold.co/600x400/EEE/31343C?text=No+Image'}" alt="${event.title}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EEE/31343C?text=Invalid+Image';">
+                <div class="event-card-content">
+                    <h3>${event.title}</h3>
+                    <p>${event.description.substring(0, 100)}...</p>
+                    <button class="btn btn-primary" onclick="applyForEvent(${event.id}, this)">Apply</button>
+                </div>
+            </div>`).join('');
+    }
+
+    // --- ADMIN ACTION HANDLERS ---
+    async function createEvent(e) {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.target).entries());
+        const response = await fetch('/api/admin/events', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            e.target.reset();
+            await loadEventsForAdmin();
+        } else alert('Failed to create event.');
+    }
+
+    function openEditModal(eventId) {
+        const event = currentEvents.find(e => e.id === eventId);
+        if (!event) return;
+        document.getElementById('edit-event-id').value = event.id;
+        document.getElementById('edit-title').value = event.title;
+        document.getElementById('edit-description').value = event.description;
+        document.getElementById('edit-imageUrl').value = event.imageUrl || '';
+        document.getElementById('edit-modal').style.display = 'block';
+    }
+
+    async function handleEditSubmit(e) {
+        e.preventDefault();
+        const eventId = document.getElementById('edit-event-id').value;
+        const data = {
+            title: document.getElementById('edit-title').value,
+            description: document.getElementById('edit-description').value,
+            imageUrl: document.getElementById('edit-imageUrl').value
+        };
+        const response = await fetch(`/api/admin/events/${eventId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (response.ok) {
+            closeModal('edit-modal');
+            await loadEventsForAdmin();
+        } else alert('Failed to update event.');
+    }
+
+    async function deleteEvent(eventId) {
+        if (!confirm('Are you sure you want to delete this event and all its applications?')) return;
+        const response = await fetch(`/api/admin/events/${eventId}`, { method: 'DELETE' });
+        if (response.ok) await loadEventsForAdmin();
+        else alert('Failed to delete event.');
+    }
+
+    async function openApplicantsModal(eventId, eventTitle) {
+        const modal = document.getElementById('applicants-modal');
+        const listContainer = document.getElementById('applicant-list');
+        document.getElementById('applicants-modal-title').textContent = `Applicants for "${eventTitle}"`;
+        listContainer.innerHTML = '<p>Loading...</p>';
+        modal.style.display = 'block';
+        const response = await fetch(`/api/admin/events/${eventId}/applications`);
+        if (response.ok) {
+            const applicants = await response.json();
+            if (applicants.length) {
+                listContainer.innerHTML = `<ul>${applicants.map(e => `<li>${e}</li>`).join('')}</ul>`;
+            } else {
+                listContainer.innerHTML = '<p>No applications yet.</p>';
+            }
+        } else listContainer.innerHTML = '<p class="error">Failed to fetch applicants.</p>';
+    }
+
+    // --- USER ACTION HANDLER ---
+    async function applyForEvent(eventId, button) {
+        button.disabled = true;
+        button.textContent = 'Applying...';
+        const response = await fetch(`/api/events/${eventId}/apply`, { method: 'POST' });
+        if (response.ok) {
+            button.textContent = 'Applied!';
+            button.style.backgroundColor = 'var(--success-color)';
+        } else {
+            const message = await response.text();
+            alert(`Application failed: ${message}`);
+            button.textContent = 'Apply';
+            button.disabled = false;
+        }
     }
 </script>
 
 </body>
 </html>
-
-
 

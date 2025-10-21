@@ -17,18 +17,8 @@ public class LoginService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * The login() method has been removed because in a Spring Security JWT setup,
-     * the AuthenticationManager uses the CustomUserDetailsService to handle authentication,
-     * making a separate login method in this service redundant.
-     */
-
-    /**
-     * Handles all business logic and validation for registering a new user.
-     */
     public void register(String username, String password, String confirmPassword) {
-        // --- ALL VALIDATION LOGIC IS NOW HERE ---
-
+        // ... all your existing validation logic ...
         if (userExists(username)) {
             throw new RegistrationException("An account with this email already exists.");
         }
@@ -46,10 +36,14 @@ public class LoginService {
             throw new RegistrationException("Password must contain at least one number and one special character.");
         }
 
-        // --- If all checks pass, proceed to save ---
         UserEntity user = new UserEntity();
         user.setEmailid(username);
-        user.setPassword(passwordEncoder.encode(password)); // Hashing is done here!
+        user.setPassword(passwordEncoder.encode(password));
+
+        // --- THIS IS THE UPDATE ---
+        // Set the role for every new user to ROLE_USER by default.
+        user.setRole("ROLE_USER");
+        // ------------------------
 
         loginRepo.save(user);
     }
@@ -58,3 +52,4 @@ public class LoginService {
         return loginRepo.findByEmailid(emailid).isPresent();
     }
 }
+
