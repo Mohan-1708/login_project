@@ -30,10 +30,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if ("admin@yourapp.com".equals(username)) {
-            String encodedAdminPassword = passwordEncoder.encode("adminpassword");
+        if ("admin@event.com".equals(username)) {
+            String encodedAdminPassword = passwordEncoder.encode("Admin@11#");
             return new User(
-                    "admin@yourapp.com",
+                    "admin@event.com",
                     encodedAdminPassword,
                     Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"))
             );

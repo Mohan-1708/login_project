@@ -117,11 +117,18 @@ public class AdminController {
      */
     @GetMapping("/events/{id}/applications")
     public ResponseEntity<?> getApplicationsForEvent(@PathVariable Long id) {
+        // 1. Find all applications for the event
         List<EventApplication> applications = applicationRepository.findByEventId(id);
-        // Extract just the email addresses of the applicants
-        List<String> applicantEmails = applications.stream()
-                .map(EventApplication::getUsername)
+
+        // 2. Map the applications to a list of ProfileResponse objects
+        List<ProfileResponse> applicantProfiles = applications.stream()
+                // Get the UserEntity from each application
+                .map(EventApplication::getUser)
+                // Convert each UserEntity to a safe ProfileResponse DTO
+                .map(ProfileResponse::new)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(applicantEmails);
+
+        // 3. Return the list of profile objects
+        return ResponseEntity.ok(applicantProfiles);
     }
 }

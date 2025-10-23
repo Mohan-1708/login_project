@@ -24,7 +24,7 @@
         .modal { z-index: 50; }
         .event-card img { cursor: pointer; } /* Make images clickable */
         /* --- Modal Styles --- */
-        .modal { display: none; /* Hidden by default */ position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+        .modal { /* display: none; */ /* We now use 'hidden' class */ position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
         .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; border-radius: 12px; position: relative; }
         .close { color: #aaa; position: absolute; top: 10px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; }
         .modal h2 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;}
@@ -39,29 +39,11 @@
         #applicant-list-container table { width: 100%; }
         #applicant-list-container th, #applicant-list-container td { text-align: left; padding: 8px; border-bottom: 1px solid var(--border-color); }
         #applicant-list-container th { background-color: #f3f4f6; font-weight: 600; }
-        /* Style adjustments for Tailwind */
-        .btn { @apply py-2 px-4 rounded-md font-semibold text-sm transition duration-150 ease-in-out; }
-        .btn-primary { @apply bg-blue-500 text-white hover:bg-blue-600; }
-        .btn-secondary { @apply bg-gray-200 text-gray-700 hover:bg-gray-300; }
-        .btn-danger { @apply bg-red-500 text-white hover:bg-red-600; }
-        .btn-warning { @apply bg-yellow-400 text-yellow-900 hover:bg-yellow-500; }
-        .card { @apply bg-white p-6 rounded-lg shadow-md mb-6; }
-        .event-card { @apply bg-white rounded-lg shadow overflow-hidden flex flex-col; }
-        .event-card img { @apply w-full h-48 object-cover bg-gray-200; }
-        .event-card-content { @apply p-4 flex flex-col flex-grow; }
-        .event-card-content h3 { @apply text-lg font-semibold text-gray-800 mb-2; }
-        .event-card-content p { @apply text-gray-600 text-sm flex-grow mb-4; }
-        .event-card-actions { @apply mt-auto flex space-x-2; }
-        .form-group { @apply mb-4; }
-        .form-group label { @apply block text-sm font-medium text-gray-700 mb-1; }
-        .form-group input, .form-group textarea { @apply mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500; }
-        input[type="file"] { @apply mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer; }
     </style>
 </head>
 <body class="bg-gray-100">
 
 <div class="relative min-h-screen md:flex">
-    <!-- Mobile Menu Button -->
     <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
         <a href="/home" class="block p-4 text-white font-bold">EventApp</a>
         <button id="mobile-menu-button" class="p-4 focus:outline-none focus:bg-gray-700" aria-label="Open menu">
@@ -69,7 +51,6 @@
         </button>
     </div>
 
-    <!-- Sidebar -->
     <aside id="sidebar" class="sidebar-transition bg-gray-800 text-white w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform -translate-x-full md:relative md:translate-x-0 z-30">
         <div class="flex items-center px-4">
             <div class="w-8 h-8 mr-3 bg-blue-500 rounded-lg"></div>
@@ -80,7 +61,10 @@
                 <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                 <span>Dashboard</span>
             </a>
-            <!-- Add other common nav links here if needed -->
+            <button id="profile-nav-button" onclick="openProfileModal()" style="display: none;" class="w-full flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-left">
+                <svg class="h-5 w-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                <span>My Profile</span>
+            </button>
         </nav>
         <div class="pt-6 border-t border-gray-700">
             <button onclick="logout()" class="w-full flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700 hover:text-white text-left">
@@ -90,7 +74,6 @@
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main class="flex-1 p-6 lg:p-10 overflow-y-auto">
         <header class="flex flex-wrap justify-between items-center mb-10 gap-4">
             <h1 id="dashboard-title" class="text-3xl font-semibold text-gray-800">Dashboard</h1>
@@ -100,12 +83,10 @@
             </div>
         </header>
         <div id="dashboard-content">
-            <!-- Role-specific view will be injected here -->
         </div>
     </main>
 </div>
 
-<!-- Edit Event Modal (Admin Only) -->
 <div id="edit-modal" class="modal fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
     <div class="relative top-10 md:top-20 mx-auto p-5 border w-11/12 md:max-w-md shadow-lg rounded-md bg-white">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -115,9 +96,9 @@
         <div class="mt-2 px-2 py-3">
             <form id="edit-event-form">
                 <input type="hidden" id="edit-event-id" name="id">
-                <div class="form-group"><label for="edit-title">Event Title</label><input type="text" id="edit-title" name="title" required></div>
-                <div class="form-group"><label for="edit-description">Description</label><textarea id="edit-description" name="description" rows="4" required></textarea></div>
-                <div class="form-group"><label for="edit-imageFile">Change Image (Optional)</label><input type="file" id="edit-imageFile" name="imageFile" accept="image/*"></div>
+                <div class="mb-4"><label for="edit-title" class="block text-sm font-medium text-gray-700 mb-1">Event Title</label><input type="text" id="edit-title" name="title" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></div>
+                <div class="mb-4"><label for="edit-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label><textarea id="edit-description" name="description" rows="4" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea></div>
+                <div class="mb-4"><label for="edit-imageFile" class="block text-sm font-medium text-gray-700 mb-1">Change Image (Optional)</label><input type="file" id="edit-imageFile" name="imageFile" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"></div>
                 <div class="items-center px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Save Changes</button>
                     <button type="button" onclick="closeModal('edit-modal')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
@@ -127,7 +108,6 @@
     </div>
 </div>
 
-<!-- Applicants Modal (Admin Only) -->
 <div id="applicants-modal" class="modal fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
     <div class="relative top-10 md:top-20 mx-auto p-5 border w-11/12 md:max-w-lg shadow-lg rounded-md bg-white">
         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -135,12 +115,10 @@
             <button onclick="closeModal('applicants-modal')" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
         </div>
         <div id="applicant-list-container" class="mt-4 text-sm text-gray-600 max-h-80 overflow-y-auto">
-            <!-- Table will be generated here -->
         </div>
     </div>
 </div>
 
-<!-- Event Details Modal (New) -->
 <div id="event-details-modal" class="modal fixed hidden inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full flex items-center justify-center p-4 z-40">
     <div class="modal-content relative p-5 bg-white w-full max-w-2xl max-h-[90vh] shadow-lg rounded-md flex flex-col">
         <div class="flex justify-between items-center mb-4 border-b pb-3">
@@ -150,6 +128,50 @@
         <div class="flex-grow overflow-y-auto">
             <img id="event-details-image" src="" alt="Event Image" class="w-full h-64 object-cover rounded mb-4 bg-gray-200">
             <p id="event-details-description" class="text-gray-700 whitespace-pre-wrap"></p>
+        </div>
+    </div>
+</div>
+
+<div id="profile-modal" class="modal fixed hidden inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+    <div class="relative top-10 md:top-20 mx-auto p-5 border w-11/12 md:max-w-md shadow-lg rounded-md bg-white">
+        <div class="flex justify-between items-center mb-3 border-b pb-2">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Update Your Profile</h3>
+            <button onclick="closeModal('profile-modal')" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+        </div>
+        <div class="mt-2 px-2 py-3">
+            <form id="profile-form">
+                <div id="profile-message" class="mb-4 text-center text-sm font-medium"></div>
+                <div class="mb-4">
+                    <label for="profile-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="profile-email" name="emailid" readonly class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed">
+                </div>
+                <div class="mb-4">
+                    <label for="profile-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                    <input type="text" id="profile-name" name="name" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="profile-mobileNumber" class="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
+                    <input type="tel" id="profile-mobileNumber" name="mobileNumber" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label for="profile-college" class="block text-sm font-medium text-gray-700 mb-1">College</label>
+                    <input type="text" id="profile-college" name="college" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="mb-4">
+                        <label for="profile-currentYear" class="block text-sm font-medium text-gray-700 mb-1">Current Year</label>
+                        <input type="text" id="profile-currentYear" name="currentYear" placeholder="e.g. 2nd" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="profile-currentSemester" class="block text-sm font-medium text-gray-700 mb-1">Current Semester</label>
+                        <input type="text" id="profile-currentSemester" name="currentSemester" placeholder="e.g. 4th" required class="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                </div>
+                <div class="items-center px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Save Profile</button>
+                    <button type="button" onclick="closeModal('profile-modal')" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -164,7 +186,6 @@
     // --- TEMPLATES & MAIN SCRIPT ---
     let currentEvents = []; // Cache events
 
-    // ### FIX 1: 'adminViewTemplate' now uses utility classes directly ###
     const adminViewTemplate = `
         <div class="bg-white p-6 rounded-lg shadow mb-8">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Create New Event</h2>
@@ -191,12 +212,23 @@
         <h2 class="text-2xl font-semibold text-gray-700 mb-6">Available Events</h2>
         <div id="event-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>`;
 
-    // --- UTILITY FUNCTIONS ---
-    function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+    // --- ### UPDATED UTILITY FUNCTIONS ### ---
+
+    /**
+     * Closes any modal by adding the 'hidden' class.
+     */
+    function closeModal(modalId) {
+        document.getElementById(modalId)?.classList.add('hidden');
+    }
+
     async function logout() {
         await fetch('/api/logout', { method: 'POST' });
         window.location.href = '/login';
     }
+
+    /**
+     * Shows the event details modal by removing the 'hidden' class.
+     */
     function showEventDetailsModal(eventId) {
         const event = currentEvents.find(e => e.id === eventId);
         if (!event) return;
@@ -208,7 +240,9 @@
             this.src='https://placehold.co/600x400/EEE/31343C?text=No+Image';
         };
         document.getElementById('event-details-description').textContent = event.description;
-        document.getElementById('event-details-modal').style.display = 'flex';
+
+        // Use classList to show the modal
+        document.getElementById('event-details-modal')?.classList.remove('hidden');
     }
 
     // --- MAIN SCRIPT ---
@@ -223,15 +257,23 @@
             if (userRole === 'ROLE_ADMIN') {
                 document.getElementById('dashboard-title').textContent = 'Admin Dashboard';
                 document.getElementById('dashboard-content').innerHTML = adminViewTemplate;
+                // Add admin listeners
                 document.getElementById('create-event-form')?.addEventListener('submit', createEvent);
                 document.getElementById('edit-event-form')?.addEventListener('submit', handleEditSubmit);
                 await loadEventsForAdmin();
             } else { // 'ROLE_USER'
                 document.getElementById('dashboard-title').textContent = 'User Dashboard';
                 document.getElementById('dashboard-content').innerHTML = userViewTemplate;
+
+                // Show the profile button for users
+                document.getElementById('profile-nav-button').style.display = 'flex';
+                // Add listener for the profile form
+                document.getElementById('profile-form')?.addEventListener('submit', handleProfileUpdate);
+
                 await loadEventsForUser();
             }
         } catch (error) {
+            console.error("Error on page load:", error);
             logout(); // Redirect to login if token is invalid/expired
         }
     };
@@ -253,7 +295,6 @@
                 eventList.innerHTML = '<p class="text-gray-500 col-span-full">No events created yet.</p>'; return;
             }
 
-            // ### FIX 2: Admin buttons now use utility classes directly ###
             eventList.innerHTML = events.map(event => `
                 <div class="event-card">
                     <img src="/api/events/${event.id}/image" alt="${event.title}" class="w-full h-48 object-cover cursor-pointer" onclick="showEventDetailsModal(${event.id})" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EEE/31343C?text=No+Image';">
@@ -281,16 +322,16 @@
                 eventList.innerHTML = '<p class="text-gray-500 col-span-full">No events available.</p>'; return;
             }
 
-            // ### FIX 3: User 'Apply' button now uses utility classes directly ###
             eventList.innerHTML = events.map(event => `
                 <div class="event-card">
-                    <img src="/api/events/${event.id}/image" alt="${event.title}" class="w-full h-48 object-cover cursor-pointer" onclick="showEventDetailsModal(${event.id})" onerror="this.onerror=null;this.src='https://placehold.co/600x400/EEE/31343C?text=No+Image';">
+                    <img src="/api/events/${event.id}/image" alt="${event.title}" class="w-full h-48 object-cover cursor-pointer" onclick="showEventDetailsModal(${event.id})" onerror="this.onerror=null;this.src='https.placehold.co/600x400/EEE/31343C?text=No+Image';">
                     <div class="event-card-content">
                         <h3 class="text-lg font-semibold text-gray-800 mb-2">${event.title}</h3>
                         <p class="text-gray-600 text-sm flex-grow mb-4">${event.description.substring(0, 100)}...</p>
                         <button class="mt-auto w-full py-2 px-4 rounded-md font-semibold text-sm transition duration-150 ease-in-out bg-blue-500 text-white hover:bg-blue-600" onclick="applyForEvent(${event.id}, this)">Apply</button>
                     </div>
                 </div>`).join('');
+
         } catch (error) {
             const eventList = document.getElementById('event-list');
             if(eventList) eventList.innerHTML = '<p class="text-red-500 col-span-full">Error loading events.</p>';
@@ -314,6 +355,9 @@
         }
     }
 
+    /**
+     * Shows the edit modal by removing the 'hidden' class.
+     */
     function openEditModal(eventId) {
         const event = currentEvents.find(e => e.id === eventId);
         if (!event) return;
@@ -321,7 +365,9 @@
         document.getElementById('edit-title').value = event.title;
         document.getElementById('edit-description').value = event.description;
         document.getElementById('edit-imageFile').value = ''; // Clear file input
-        document.getElementById('edit-modal').style.display = 'block';
+
+        // Use classList to show the modal
+        document.getElementById('edit-modal')?.classList.remove('hidden');
     }
 
     async function handleEditSubmit(e) {
@@ -331,7 +377,7 @@
         try {
             const response = await fetch(`/api/admin/events/${eventId}`, { method: 'PUT', body: formData });
             if (response.ok) {
-                closeModal('edit-modal');
+                closeModal('edit-modal'); // This will now add 'hidden' class
                 await loadEventsForAdmin();
             } else {
                 alert('Failed to update event. Status: ' + response.status);
@@ -355,23 +401,47 @@
         }
     }
 
+    /**
+     * Shows the applicants modal by removing the 'hidden' class and fetches data.
+     */
     async function openApplicantsModal(eventId, eventTitle) {
         const modal = document.getElementById('applicants-modal');
         const listContainer = document.getElementById('applicant-list-container');
         document.getElementById('applicants-modal-title').textContent = `Applicants for "${eventTitle}"`;
         listContainer.innerHTML = '<p class="text-center py-4">Loading...</p>';
-        modal.style.display = 'block';
+
+        // Use classList to show the modal
+        modal?.classList.remove('hidden');
+
         try {
             const response = await fetch(`/api/admin/events/${eventId}/applications`);
             if (response.ok) {
-                const applicants = await response.json();
+                const applicants = await response.json(); // List of profile objects
                 if (applicants.length) {
-                    let tableHTML = `<table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th><th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Applicant Email</th></tr></thead><tbody class="bg-white divide-y divide-gray-200">`;
-                    applicants.forEach((email, index) => {
-                        tableHTML += `<tr><td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${index + 1}</td><td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${email}</td></tr>`;
+
+                    let tableHTML = `<div class="overflow-x-auto"><table class="min-w-full divide-y divide-gray-200"><thead class="bg-gray-50"><tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mobile</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">College</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
+                        </tr></thead><tbody class="bg-white divide-y divide-gray-200">`;
+
+                    applicants.forEach((applicant, index) => {
+                        tableHTML += `<tr>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${index + 1}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${applicant.name || 'N/A'}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${applicant.emailid || 'N/A'}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${applicant.mobileNumber || 'N/A'}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${applicant.college || 'N/A'}</td>
+                            <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">${applicant.currentYear || 'N/A'}</td>
+                            </tr>`;
                     });
-                    tableHTML += `</tbody></table>`;
+
+                    tableHTML += `</tbody></table></div>`;
                     listContainer.innerHTML = tableHTML;
+
                 } else {
                     listContainer.innerHTML = '<p class="text-center py-4">No applications yet.</p>';
                 }
@@ -384,20 +454,103 @@
         }
     }
 
-    // --- USER ACTION HANDLER ---
+    // --- PROFILE FUNCTIONS (FOR USER) ---
+
+    /**
+     * Fetches user profile data and opens the profile modal.
+     */
+    async function openProfileModal() {
+        const messageDiv = document.getElementById('profile-message');
+        messageDiv.textContent = '';
+        messageDiv.className = 'mb-4 text-center text-sm font-medium'; // Reset classes
+
+        try {
+            const response = await fetch('/api/profile');
+            if (!response.ok) {
+                throw new Error('Could not load profile.');
+            }
+            const profile = await response.json();
+
+            // Populate the form fields
+            document.getElementById('profile-email').value = profile.emailid || '';
+            document.getElementById('profile-name').value = profile.name || '';
+            document.getElementById('profile-mobileNumber').value = profile.mobileNumber || '';
+            document.getElementById('profile-college').value = profile.college || '';
+            document.getElementById('profile-currentYear').value = profile.currentYear || '';
+            document.getElementById('profile-currentSemester').value = profile.currentSemester || '';
+
+        } catch (error) {
+            messageDiv.textContent = 'Error loading profile. Please try again.';
+            messageDiv.classList.add('text-red-500');
+        }
+
+        // Use classList to show the modal
+        document.getElementById('profile-modal')?.classList.remove('hidden');
+    }
+
+    async function handleProfileUpdate(event) {
+        event.preventDefault();
+        const messageDiv = document.getElementById('profile-message');
+        messageDiv.textContent = 'Saving...';
+        messageDiv.className = 'mb-4 text-center text-sm font-medium text-gray-500';
+
+        const data = {
+            name: document.getElementById('profile-name').value,
+            mobileNumber: document.getElementById('profile-mobileNumber').value,
+            college: document.getElementById('profile-college').value,
+            currentYear: document.getElementById('profile-currentYear').value,
+            currentSemester: document.getElementById('profile-currentSemester').value
+        };
+
+        try {
+            const response = await fetch('/api/profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' }, // This was the 'ContentType' typo
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                messageDiv.textContent = result.message;
+                messageDiv.classList.remove('text-gray-500', 'text-red-500');
+                messageDiv.classList.add('text-green-500');
+
+                // Close modal after a short delay
+                setTimeout(() => {
+                    closeModal('profile-modal');
+                }, 1500);
+            } else {
+                throw new Error(result.error || 'Failed to update profile.');
+            }
+        } catch (error) {
+            messageDiv.textContent = error.message;
+            messageDiv.classList.remove('text-gray-500', 'text-green-500');
+            messageDiv.classList.add('text-red-500');
+        }
+    }
+
+
+    // --- UPDATED USER ACTION HANDLER ---
     async function applyForEvent(eventId, button) {
         button.disabled = true;
         button.textContent = 'Applying...';
         try {
             const response = await fetch(`/api/events/${eventId}/apply`, { method: 'POST' });
+            const result = await response.json().catch(() => null);
+
             if (response.ok) {
                 button.textContent = 'Applied!';
-                // ### FIX 4: Changed classList logic to use utility classes ###
                 button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
                 button.classList.add('bg-green-500', 'cursor-not-allowed', 'hover:bg-green-600');
+
             } else {
-                const message = await response.text();
-                alert(`Application failed: ${message}`);
+                if (response.status === 403 && result && result.error.includes("complete your profile")) {
+                    alert("Please complete your profile before applying. The profile form will now open.");
+                    openProfileModal(); // Automatically open the profile modal
+                } else {
+                    alert(`Application failed: ${result ? result.error : 'Please try again.'}`);
+                }
                 button.textContent = 'Apply';
                 button.disabled = false;
             }
@@ -410,9 +563,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
