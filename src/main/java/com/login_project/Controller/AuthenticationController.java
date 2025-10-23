@@ -33,22 +33,37 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) {
         try {
+            // 1. Authenticate username and password
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
             );
         } catch (BadCredentialsException e) {
-            // THIS IS THE FIX: Return a proper 401 error with a clear message
+            // This is correct, keep it
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Incorrect username or password"));
         }
 
+        // 2. Load the user
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+
+        // 3. --- THIS IS THE NEW LOGIC ---
+        // Check if the authenticated user is an admin
+        boolean isAdmin = userDetails.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isAdmin) {
+            // If they are an admin, reject them from this (user) login endpoint.
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "Access Denied: Please use the admin login portal."));
+        }
+        // --------------------------------
+
+        // 4. If they are a normal user, generate token and set cookie
         final String jwt = jwtUtil.generateToken(userDetails);
 
         Cookie jwtCookie = new Cookie("jwtToken", jwt);
         jwtCookie.setHttpOnly(true);
         jwtCookie.setSecure(false);
         jwtCookie.setPath("/");
-        jwtCookie.setMaxAge(60);
+        jwtCookie.setMaxAge(60*5);
         response.addCookie(jwtCookie);
 
         return ResponseEntity.ok(Map.of("message", "Authentication Successful"));
@@ -65,5 +80,45 @@ public class AuthenticationController {
 
         response.addCookie(cookie);
         return ResponseEntity.ok("Logout successful");
+    }
+    // In com.login_project.Controller.AuthenticationController
+
+// (You already have the @Autowired fields and the /api/login and /api/logout methods)
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<?> createAdminAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) {
+        try {
+            // 1. Authenticate username and password
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+            );
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Incorrect username or password"));
+        }
+
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+
+        // 2. --- NEW ADMIN CHECK ---
+        // Check if the authenticated user actually has the 'ROLE_ADMIN'
+        boolean isAdmin = userDetails.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            // If they are a valid user but not an admin, reject them.
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", "Access Denied: This is an admin-only login."));
+        }
+        // -------------------------
+
+        // 3. If they are an admin, generate token and set cookie
+        final String jwt = jwtUtil.generateToken(userDetails);
+
+        Cookie jwtCookie = new Cookie("jwtToken", jwt);
+        jwtCookie.setHttpOnly(true);
+        jwtCookie.setSecure(false);
+        jwtCookie.setPath("/");
+        jwtCookie.setMaxAge(60*5); // 5 minutes
+        response.addCookie(jwtCookie);
+
+        return ResponseEntity.ok(Map.of("message", "Admin Authentication Successful"));
     }
 }

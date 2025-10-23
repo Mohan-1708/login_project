@@ -20,4 +20,11 @@ class PageController {
     public String homePage() {
         return "success"; // Renders success.html for now
     }
+
+    // In com.login_project.Controller.PageController
+
+    @GetMapping("/admin")
+    public String adminLoginPage() {
+        return "admin"; // Renders admin.html
+    }
 }

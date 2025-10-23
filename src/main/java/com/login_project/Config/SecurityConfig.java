@@ -329,32 +329,49 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
-        // --- THIS IS THE MODERN WAY TO CREATE A MATCHER ---
+
         MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
-        // -------------------------------------------------
 
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/home", "/login", "/register", "/api/login", "/api/register").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/events/*/image").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/events").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/events/*/apply").hasRole("USER")
+                        // --- Use mvcMatcherBuilder for ALL rules ---
+
+                        // Permit all static pages, login, and registration endpoints
+                        .requestMatchers(mvcMatcherBuilder.pattern("/home")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/login")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/register")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/admin")).permitAll() // Your new admin page
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/login")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/register")).permitAll()
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/admin/login")).permitAll() // Your new admin API
+
+                        // Permit event images
+                        .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/events/*/image")).permitAll()
+
+                        // Admin-only rules
+                        .requestMatchers(mvcMatcherBuilder.pattern("/api/admin/**")).hasRole("ADMIN")
+
+                        // User/Admin shared rules
+                        .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.GET, "/api/events")).hasAnyRole("USER", "ADMIN")
+
+                        // User-only rules
+                        .requestMatchers(mvcMatcherBuilder.pattern(HttpMethod.POST, "/api/events/*/apply")).hasRole("USER")
+
+                        // All other requests must be authenticated
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(ex -> {
                     LoginUrlAuthenticationEntryPoint browserEntryPoint = new LoginUrlAuthenticationEntryPoint("/login");
-
                     LinkedHashMap<RequestMatcher, org.springframework.security.web.AuthenticationEntryPoint> entryPoints = new LinkedHashMap<>();
 
-                    // --- USE THE NEW MVC MATCHER HERE ---
                     entryPoints.put(mvcMatcherBuilder.pattern("/api/**"), jwtAuthenticationEntryPoint);
-                    // ------------------------------------
 
                     org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint delegatingEntryPoint =
                             new org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint(entryPoints);
