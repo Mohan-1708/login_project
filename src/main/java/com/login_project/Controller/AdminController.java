@@ -4,12 +4,14 @@ import com.login_project.Entity.Event;
 import com.login_project.Entity.EventApplication;
 import com.login_project.Repo.EventApplicationRepository;
 import com.login_project.Repo.EventRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile; // <-- Import MultipartFile
 
 import java.io.IOException; // <-- Import IOException
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -117,18 +119,71 @@ public class AdminController {
      */
     @GetMapping("/events/{id}/applications")
     public ResponseEntity<?> getApplicationsForEvent(@PathVariable Long id) {
-        // 1. Find all applications for the event
+        // (This method remains unchanged)
         List<EventApplication> applications = applicationRepository.findByEventId(id);
-
-        // 2. Map the applications to a list of ProfileResponse objects
         List<ProfileResponse> applicantProfiles = applications.stream()
-                // Get the UserEntity from each application
                 .map(EventApplication::getUser)
-                // Convert each UserEntity to a safe ProfileResponse DTO
+                .map(ProfileResponse::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(applicantProfiles);
+    }
+
+    private String escapeCsv(String value) {
+        if (value == null) {
+            return "\"\""; // Return empty quotes for null
+        }
+        // If the value contains a comma, quote, or newline, wrap it in double quotes
+        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+            // Escape existing double quotes by doubling them
+            value = value.replace("\"", "\"\"");
+            return "\"" + value + "\"";
+        }
+        return value; // No escaping needed
+    }
+
+    @GetMapping("/events/{id}/applications/download")
+    public void downloadApplicants(@PathVariable Long id, HttpServletResponse response) throws IOException {
+
+        // 1. Set File Headers
+        // Find the event to create a dynamic filename
+        String eventName = eventRepository.findById(id)
+                .map(Event::getTitle)
+                .orElse("event")
+                .replaceAll("[^a-zA-Z0-9]", "-"); // Sanitize filename
+
+        String filename = "applicants-" + eventName + ".csv";
+
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
+
+        // 2. Get Data (same as your getApplicationsForEvent method)
+        List<EventApplication> applications = applicationRepository.findByEventId(id);
+        List<ProfileResponse> applicantProfiles = applications.stream()
+                .map(EventApplication::getUser)
                 .map(ProfileResponse::new)
                 .collect(Collectors.toList());
 
-        // 3. Return the list of profile objects
-        return ResponseEntity.ok(applicantProfiles);
+        // 3. Write CSV Data to the Response
+        try (PrintWriter writer = response.getWriter()) {
+            // Write Header Row
+            writer.println("Name,Email,Mobile,College,Year,Semester");
+
+            // Write Data Rows
+            for (ProfileResponse profile : applicantProfiles) {
+                String line = String.join(",",
+                        escapeCsv(profile.getName()),
+                        escapeCsv(profile.getEmailid()),
+                        escapeCsv(profile.getMobileNumber()),
+                        escapeCsv(profile.getCollege()),
+                        escapeCsv(profile.getCurrentYear()),
+                        escapeCsv(profile.getCurrentSemester())
+                );
+                writer.println(line);
+            }
+        }
     }
+
+
+
+
 }
